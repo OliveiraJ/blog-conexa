@@ -26,7 +26,7 @@ class PostController extends GxController {
 
 		if (isset($_POST['Post'])) {
 			$model->setAttributes($_POST['Post']);
-			$model->post_date=date('Y/m/d H:i');
+			$model->post_date=date('Y-m-d H:i:s');
 			$username=Yii::app()->user->name;
 			$user = User::model()->findByAttributes(array('name'=>$username));
 			$model->user_id=$user->user_id;

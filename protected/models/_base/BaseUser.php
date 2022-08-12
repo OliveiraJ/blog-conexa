@@ -61,7 +61,7 @@ abstract class BaseUser extends GxActiveRecord {
 	public function attributeLabels() {
 		return array(
 			'user_id' => Yii::t('app', 'User'),
-			'name' => Yii::t('app', 'Name'),
+			'name' => Yii::t('app', 'Nome'),
 			'surname' => Yii::t('app', 'Surname'),
 			'email' => Yii::t('app', 'Email'),
 			'password' => Yii::t('app', 'Password'),

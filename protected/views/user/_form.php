@@ -14,7 +14,7 @@
 	<?php echo $form->errorSummary($model); ?>
 
 		<div class="row">
-		<?php echo $form->labelEx($model,'Nome')?>
+		<?php echo $form->labelEx($model,'name')?>
 		<?php echo $form->textField($model, 'name', array('maxlength' => 255)); ?><span class="required">*</span>
 		<?php echo $form->error($model,'name'); ?>
 		</div><!-- row -->
