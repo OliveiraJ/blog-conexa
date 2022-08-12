@@ -6,12 +6,12 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-	array('label'=>Yii::t('app', 'Create') . ' ' . Comment::label(), 'url' => array('create')),
-	array('label'=>Yii::t('app', 'Manage') . ' ' . Comment::label(2), 'url' => array('admin')),
+	array('label'=>Yii::t('app', 'Criar Comentários'), 'url' => array('create')),
+	array('label'=>Yii::t('app', 'Gerenciar Comentários'), 'url' => array('admin')),
 );
 ?>
 
-<h1><?php echo GxHtml::encode(Comment::label(2)); ?></h1>
+<h4><?php echo 'Lista de comentários'; ?></h4>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

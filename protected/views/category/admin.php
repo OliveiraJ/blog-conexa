@@ -2,12 +2,12 @@
 
 $this->breadcrumbs = array(
 	$model->label(2) => array('index'),
-	Yii::t('app', 'Manage'),
+	Yii::t('app', 'Gerenciar'),
 );
 
 $this->menu = array(
-		array('label'=>Yii::t('app', 'Listar Postagens'), 'url'=>array('index')),
-		array('label'=>Yii::t('app', 'Escrever Postagem'), 'url'=>array('create')),
+		array('label'=>Yii::t('app', 'Listar') . ' Categorias', 'url'=>array('index')),
+		array('label'=>Yii::t('app', 'Criar') . ' Categoria' , 'url'=>array('create')),
 	);
 
 Yii::app()->clientScript->registerScript('search', "
@@ -16,7 +16,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('post-grid', {
+	$.fn.yiiGridView.update('category-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -24,7 +24,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h4><?php echo Yii::t('app', 'Gerencie suas postagens'); ?></h4>
+<h5><?php echo 'Pesquise por categorias'; ?></h5>
 
 <p>
 Você pode utilizar operadores de comparação (&lt;, &lt;=, &gt;, &gt;=, &lt;&gt; or =) no início de cada um de seus valores de pesquisa para especificar como a comparação deve ser feita.
@@ -38,24 +38,12 @@ Você pode utilizar operadores de comparação (&lt;, &lt;=, &gt;, &gt;=, &lt;&g
 </div><!-- search-form -->
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id' => 'post-grid',
+	'id' => 'category-grid',
 	'dataProvider' => $model->search(),
 	'filter' => $model,
 	'columns' => array(
-		'post_id',
-		'post_text',
-		'post_title',
-		'post_date',
-		array(
-				'name'=>'post_category',
-				'value'=>'GxHtml::valueEx($data->postCategory)',
-				'filter'=>GxHtml::listDataEx(Category::model()->findAllAttributes(null, true)),
-				),
-		array(
-				'name'=>'user_id',
-				'value'=>'GxHtml::valueEx($data->user)',
-				'filter'=>GxHtml::listDataEx(User::model()->findAllAttributes(null, true)),
-				),
+		'category_id',
+		'cateogry_name',
 		array(
 			'class' => 'CButtonColumn',
 		),

@@ -4,12 +4,17 @@ class PostController extends GxController {
 	public function accessRules(){
 		return array(
 			array('allow','actions'=>array('index','view'),'users'=>array('*')),
-			array('allow','users'=>array('@')),
-			array('deny','users'=>array('*'))
+			array('allow','actions'=>array('index','view','update','create','delete'),'users'=>array('@')),
 		);
 	}
 
-
+	public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+	
 	public function actionView($id) {
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'Post'),
@@ -55,25 +60,20 @@ class PostController extends GxController {
 	}
 
 	public function actionDelete($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$username=Yii::app()->user->name;
-			$user = User::model()->findByAttributes(array('name'=>$username));			
-			$post = $this->loadModel($id, 'Post');
-			if($post->user_id===$user->user_id){
-				if($post->delete()){
-					Yii::app()->user->setFlash('success', 'Postagem deletada com sucesso!');
-				}else{
-					Yii::app()->user->setFlash('error', 'A postagem não pode ser deletada');
+		
+			if (Yii::app()->getRequest()->getIsPostRequest()) {
+				$username=Yii::app()->user->name;
+				$user = User::model()->findByAttributes(array('name'=>$username));			
+				$post = $this->loadModel($id, 'Post');
+				if($post->user_id===$user->user_id){
+					$post->delete();	
 				}
-			}else{
-				Yii::app()->user->setFlash('error', 'Você não pode excluir posts de outros usuários!');
-				$this->redirect(array('index'));
-			}
-			if (!Yii::app()->getRequest()->getIsAjaxRequest()){
-				$this->redirect(array('admin'));
-			}			
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+				if (!Yii::app()->getRequest()->getIsAjaxRequest()){
+					$this->redirect(array('admin'));
+				}			
+			} else
+				throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+
 	}
 
 	public function actionIndex() {
@@ -94,5 +94,4 @@ class PostController extends GxController {
 			'model' => $model,
 		));
 	}
-
 }

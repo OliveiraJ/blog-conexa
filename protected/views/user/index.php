@@ -6,12 +6,12 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-	array('label'=>Yii::t('app', 'Create') . ' ' . User::label(), 'url' => array('create')),
-	array('label'=>Yii::t('app', 'Manage') . ' ' . User::label(2), 'url' => array('admin')),
+	array('label'=>Yii::t('app', 'Cadastrar') . ' Usuário', 'url' => array('create')),
+	array('label'=>Yii::t('app', 'Gerenciar') . ' Usuários', 'url' => array('admin')),
 );
 ?>
 
-<h1><?php echo GxHtml::encode(User::label(2)); ?></h1>
+<h4><?php echo 'Lista de Usuários'; ?></h4>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

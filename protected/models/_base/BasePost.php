@@ -13,10 +13,12 @@
  * @property string $post_text
  * @property string $post_title
  * @property string $post_date
+ * @property integer $post_category
  * @property integer $user_id
  *
  * @property Comment[] $comments
  * @property User $user
+ * @property Category $postCategory
  */
 abstract class BasePost extends GxActiveRecord {
 
@@ -31,17 +33,17 @@ abstract class BasePost extends GxActiveRecord {
 	public static function label($n = 1) {
 		return Yii::t('app', 'Post|Posts', $n);
 	}
-
+	//Mudança para demonstrar o post_title
 	public static function representingColumn() {
-		return 'post_text';
+		return 'post_title';
 	}
 
 	public function rules() {
 		return array(
-			array('post_text, post_title, post_date, user_id', 'required'),
-			array('user_id', 'numerical', 'integerOnly'=>true),
+			array('post_text, post_title, post_date, post_category, user_id', 'required'),
+			array('post_category, user_id', 'numerical', 'integerOnly'=>true),
 			array('post_title', 'length', 'max'=>255),
-			array('post_id, post_text, post_title, post_date, user_id', 'safe', 'on'=>'search'),
+			array('post_id, post_text, post_title, post_date, post_category, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,6 +51,7 @@ abstract class BasePost extends GxActiveRecord {
 		return array(
 			'comments' => array(self::HAS_MANY, 'Comment', 'post_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'postCategory' => array(self::BELONGS_TO, 'Category', 'post_category'),
 		);
 	}
 
@@ -63,9 +66,11 @@ abstract class BasePost extends GxActiveRecord {
 			'post_text' => Yii::t('app', 'Post Text'),
 			'post_title' => Yii::t('app', 'Post Title'),
 			'post_date' => Yii::t('app', 'Post Date'),
+			'post_category' => null,
 			'user_id' => null,
 			'comments' => null,
 			'user' => null,
+			'postCategory' => null,
 		);
 	}
 
@@ -76,6 +81,7 @@ abstract class BasePost extends GxActiveRecord {
 		$criteria->compare('post_text', $this->post_text, true);
 		$criteria->compare('post_title', $this->post_title, true);
 		$criteria->compare('post_date', $this->post_date, true);
+		$criteria->compare('post_category', $this->post_category);
 		$criteria->compare('user_id', $this->user_id);
 
 		return new CActiveDataProvider($this, array(

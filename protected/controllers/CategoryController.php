@@ -1,29 +1,26 @@
 <?php
 
-class CommentController extends GxController {
+class CategoryController extends GxController {
 
 
 	public function actionView($id) {
 		$this->render('view', array(
-			'model' => $this->loadModel($id, 'Comment'),
+			'model' => $this->loadModel($id, 'Category'),
 		));
 	}
 
 	public function actionCreate() {
-		$model = new Comment;
+		$model = new Category;
 
 
-		if (isset($_POST['Comment'])) {
-			$model->setAttributes($_POST['Comment']);
-			$model->comment_date=date('Y/m/d H:i');
-			$username=Yii::app()->user->name;
-			$user = User::model()->findByAttributes(array('name'=>$username));
-			$model->user_id=$user->user_id;
+		if (isset($_POST['Category'])) {
+			$model->setAttributes($_POST['Category']);
+
 			if ($model->save()) {
 				if (Yii::app()->getRequest()->getIsAjaxRequest())
 					Yii::app()->end();
 				else
-					$this->redirect(array('view', 'id' => $model->comment_id));
+					$this->redirect(array('view', 'id' => $model->category_id));
 			}
 		}
 
@@ -31,14 +28,14 @@ class CommentController extends GxController {
 	}
 
 	public function actionUpdate($id) {
-		$model = $this->loadModel($id, 'Comment');
+		$model = $this->loadModel($id, 'Category');
 
 
-		if (isset($_POST['Comment'])) {
-			$model->setAttributes($_POST['Comment']);
+		if (isset($_POST['Category'])) {
+			$model->setAttributes($_POST['Category']);
 
 			if ($model->save()) {
-				$this->redirect(array('view', 'id' => $model->comment_id));
+				$this->redirect(array('view', 'id' => $model->category_id));
 			}
 		}
 
@@ -49,7 +46,7 @@ class CommentController extends GxController {
 
 	public function actionDelete($id) {
 		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$this->loadModel($id, 'Comment')->delete();
+			$this->loadModel($id, 'Category')->delete();
 
 			if (!Yii::app()->getRequest()->getIsAjaxRequest())
 				$this->redirect(array('admin'));
@@ -58,18 +55,18 @@ class CommentController extends GxController {
 	}
 
 	public function actionIndex() {
-		$dataProvider = new CActiveDataProvider('Comment');
+		$dataProvider = new CActiveDataProvider('Category');
 		$this->render('index', array(
 			'dataProvider' => $dataProvider,
 		));
 	}
 
 	public function actionAdmin() {
-		$model = new Comment('search');
+		$model = new Category('search');
 		$model->unsetAttributes();
 
-		if (isset($_GET['Comment']))
-			$model->setAttributes($_GET['Comment']);
+		if (isset($_GET['Category']))
+			$model->setAttributes($_GET['Category']);
 
 		$this->render('admin', array(
 			'model' => $model,

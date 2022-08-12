@@ -2,12 +2,12 @@
 
 $this->breadcrumbs = array(
 	$model->label(2) => array('index'),
-	Yii::t('app', 'Manage'),
+	Yii::t('app', 'Gerenciar'),
 );
 
 $this->menu = array(
-		array('label'=>Yii::t('app', 'List') . ' ' . $model->label(2), 'url'=>array('index')),
-		array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create')),
+		array('label'=>Yii::t('app', 'Listar') . ' Comentários' , 'url'=>array('index')),
+		array('label'=>Yii::t('app', 'Criar') . ' Comentário' , 'url'=>array('create')),
 	);
 
 Yii::app()->clientScript->registerScript('search', "
@@ -24,13 +24,13 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('app', 'Manage') . ' ' . GxHtml::encode($model->label(2)); ?></h1>
+<h1><?php echo Yii::t('app', 'Gerencie') . ' os comentários'; ?></h1>
 
 <p>
-You may optionally enter a comparison operator (&lt;, &lt;=, &gt;, &gt;=, &lt;&gt; or =) at the beginning of each of your search values to specify how the comparison should be done.
+Você pode utilizar operadores de comparação (&lt;, &lt;=, &gt;, &gt;=, &lt;&gt; or =) no início de cada um de seus valores de pesquisa para especificar como a comparação deve ser feita.
 </p>
 
-<?php echo GxHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button')); ?>
+<?php echo GxHtml::link(Yii::t('app', 'Busca Avançada'), '#', array('class' => 'search-button')); ?>
 <div class="search-form">
 <?php $this->renderPartial('_search', array(
 	'model' => $model,
@@ -48,7 +48,7 @@ You may optionally enter a comparison operator (&lt;, &lt;=, &gt;, &gt;=, &lt;&g
 		'comment_date',
 		array(
 				'name'=>'post_id',
-				'value'=>'GxHtml::valueEx($data->post)',
+				'value'=>'GxHtml::valueEx($data->post, "post_title")',
 				'filter'=>GxHtml::listDataEx(Post::model()->findAllAttributes(null, true)),
 				),
 		array(

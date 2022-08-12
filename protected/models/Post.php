@@ -8,15 +8,22 @@ class Post extends BasePost
 		return parent::model($className);
 	}
 
-	public function getUrl(){
-		return Yii::app()->createUrl('post/view', array(
-			'id'=>$this->post_id,
-			'title'=>$this->post_title,
-		));
-	}
+	public function search() {
+		$criteria = new CDbCriteria;
+		$userId = Yii::app()->user->id;
+		if($userId!=1){
+			$criteria->addCondition('user_id = '.$userId,"AND");
+		}
+		
+		$criteria->compare('post_id', $this->post_id);
+		$criteria->compare('post_text', $this->post_text, true);
+		$criteria->compare('post_title', $this->post_title, true);
+		$criteria->compare('post_date', $this->post_date, true);
+		$criteria->compare('post_category', $this->post_category);
+		$criteria->compare('user_id', $this->user_id);
 
-	protected function afterDelete(){
-		parent::afterDelete();
-		Comment::model()->deleteAll('post_id='.$this->post_id);
+		return new CActiveDataProvider($this, array(
+			'criteria' => $criteria,
+		));
 	}
 }

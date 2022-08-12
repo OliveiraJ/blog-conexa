@@ -8,35 +8,30 @@
 ?>
 
 	<p class="note">
-		<?php echo Yii::t('app', 'Fields with'); ?> <span class="required">*</span> <?php echo Yii::t('app', 'are required'); ?>.
+		<?php echo Yii::t('app', 'Campos com'); ?> <span class="required">*</span> <?php echo Yii::t('app', 'são obrigatórios'); ?>.
 	</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
 		<div class="row">
-		<?php echo $form->labelEx($model,'comment_title'); ?>
-		<?php echo $form->textField($model, 'comment_title', array('maxlength' => 255)); ?>
+		<?php echo $form->labelEx($model,'Título'); ?>
+		<?php echo $form->textField($model, 'comment_title', array('maxlength' => 255)); ?><span class="required">*</span> 
 		<?php echo $form->error($model,'comment_title'); ?>
 		</div><!-- row -->
 		<div class="row">
-		<?php echo $form->labelEx($model,'comment_text'); ?>
-		<?php echo $form->textArea($model, 'comment_text'); ?>
+		<?php echo $form->labelEx($model,'Comentário'); ?>
+		<?php echo $form->textArea($model, 'comment_text'); ?><span class="required">*</span> 
 		<?php echo $form->error($model,'comment_text'); ?>
 		</div><!-- row -->
 		<div class="row">
-		<?php echo $form->labelEx($model,'post_id'); ?>
-		<?php echo $form->dropDownList($model, 'post_id', GxHtml::listDataEx(Post::model()->findAllAttributes(null, true))); ?>
+		<?php echo $form->labelEx($model,'Título do Post'); ?>
+		<?php echo $form->dropDownList($model, 'post_id', GxHtml::listDataEx(Post::model()->findAllAttributes(null, true))); ?><span class="required">*</span> 
 		<?php echo $form->error($model,'post_id'); ?>
-		</div><!-- row -->
-		<div class="row">
-		<?php echo $form->labelEx($model,'user_id'); ?>
-		<?php echo $form->dropDownList($model, 'user_id', GxHtml::listDataEx(User::model()->findAllAttributes(null, true))); ?>
-		<?php echo $form->error($model,'user_id'); ?>
 		</div><!-- row -->
 
 
 <?php
-echo GxHtml::submitButton(Yii::t('app', 'Save'));
+echo GxHtml::submitButton(Yii::t('app', 'Salvar'));
 $this->endWidget();
 ?>
 </div><!-- form -->

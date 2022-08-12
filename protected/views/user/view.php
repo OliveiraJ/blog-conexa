@@ -5,29 +5,30 @@ $this->breadcrumbs = array(
 	GxHtml::valueEx($model),
 );
 
-$this->menu=array(
-	array('label'=>Yii::t('app', 'List') . ' ' . $model->label(2), 'url'=>array('index')),
-	array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create')),
-	array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->user_id)),
-	array('label'=>Yii::t('app', 'Delete') . ' ' . $model->label(), 'url'=>'#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->user_id), 'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>Yii::t('app', 'Manage') . ' ' . $model->label(2), 'url'=>array('admin')),
-);
+if(!Yii::app()->user->isGuest){
+	$this->menu=array(
+		array('label'=>Yii::t('app', 'Listar Usuários') , 'url'=>array('index')),
+		array('label'=>Yii::t('app', 'Criar Usuário'), 'url'=>array('create'), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->name==='admin'),
+		array('label'=>Yii::t('app', 'Atualizar Usuário'), 'url'=>array('update', 'id' => $model->user_id), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->name==='admin'),
+		array('label'=>Yii::t('app', 'Deletar Usuário'), 'url'=>'#', 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->name==='admin','linkOptions' => array('submit' => array('delete', 'id' => $model->user_id), 'confirm'=>'Are you sure you want to delete this item?')),
+		array('label'=>Yii::t('app', 'Gerenciar Usuários'), 'url'=>array('admin'), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->name==='admin'),
+	);
+}
 ?>
 
-<h1><?php echo Yii::t('app', 'View') . ' ' . GxHtml::encode($model->label()) . ' ' . GxHtml::encode(GxHtml::valueEx($model)); ?></h1>
+<h4><?php echo 'Usuário: '.GxHtml::encode(GxHtml::valueEx($model)); ?></h4>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data' => $model,
 	'attributes' => array(
-'user_id',
-'name',
-'surname',
-'email',
-'password',
+		'user_id',
+		'name',
+		'surname',
+		'email',
 	),
 )); ?>
 
-<h2><?php echo GxHtml::encode($model->getRelationLabel('comments')); ?></h2>
+<h4><?php echo GxHtml::encode($model->getRelationLabel('Comentários')); ?></h4>
 <?php
 	echo GxHtml::openTag('ul');
 	foreach($model->comments as $relatedModel) {
@@ -36,7 +37,7 @@ $this->menu=array(
 		echo GxHtml::closeTag('li');
 	}
 	echo GxHtml::closeTag('ul');
-?><h2><?php echo GxHtml::encode($model->getRelationLabel('posts')); ?></h2>
+?><h4><?php echo GxHtml::encode($model->getRelationLabel('Postagens')); ?></h4>
 <?php
 	echo GxHtml::openTag('ul');
 	foreach($model->posts as $relatedModel) {

@@ -5,15 +5,18 @@ $this->breadcrumbs = array(
 	Yii::t('app', 'Index'),
 );
 
-$this->menu = array(
-	array('label'=>'Criar Post', 'url' => array('create')),
-	array('label'=>'Gerenciar Posts', 'url' => array('admin')),
-);
+if(!Yii::app()->user->isGuest){
+	$this->menu = array(
+		array('label'=>Yii::t('app', 'Escrever Postagem'), 'url' => array('create')),
+		array('label'=>Yii::t('app', 'Gerenciar Postagens'), 'url' => array('admin')),
+	);
+}
 ?>
-
-<h1><?php echo GxHtml::encode(Post::label(2)); ?></h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
+	'sortableAttributes'=>array(
+		'post_date'
+	)
 )); 
